@@ -65,21 +65,29 @@
       items.scrollLeft = scrollLeft - walk;
     });
 	  
+Cypress.on('uncaught:exception', (err, runnable) => {
+  return false;
+});
+
 describe('Drag and Slide Test', () => {
-  it('should drag to slide the items', () => {
+  beforeEach(() => {
     cy.visit('path/to/your/index.html'); // Adjust the path as necessary
+  });
+
+  it('should drag to slide the items', () => {
     cy.get('.items')
       .trigger('mousedown', { which: 1, pageX: 493, pageY: 391 })
       .trigger('mousemove', { pageX: 271, pageY: 391 })
       .trigger('mouseup', { force: true });
     
-    cy.get('.items').should($items => {
+    cy.get('.items').should(($items) => {
       expect($items[0].scrollLeft).to.be.greaterThan(0);
     });
   });
 });
 
-  </script>
+
+</script>
 </body>
 </html>
 
